@@ -8,9 +8,9 @@ OBJECT_PATH = @object_path@
 vpath %.o $(OBJECT_PATH)
 
 OBJECTS	=	Stk.o Generator.o Envelope.o SineWave.o \
-					Filter.o Delay.o DelayL.o \
-					Effect.o Echo.o PitShift.o Chorus.o \
-					PRCRev.o JCRev.o NRev.o \
+					Filter.o Delay.o DelayL.o OnePole.o \
+					Effect.o Echo.o PitShift.o Chorus.o LentPitShift.o \
+					PRCRev.o JCRev.o NRev.o FreeVerb.o \
 					FileRead.o WvIn.o FileWvIn.o WaveLoop.o Skini.o Messager.o
 
 INCLUDE = @include@
@@ -38,30 +38,29 @@ ifeq ($(strip $(RAWWAVES)), )
 endif
 DEFS    += -DRAWWAVE_PATH=\"$(RAWWAVES)\"
 
-%.o : $(SRC_PATH)/%.cpp Release/.placeholder
+%.o : $(SRC_PATH)/%.cpp
 	$(CC) $(CFLAGS) $(DEFS) -c $(<) -o $(OBJECT_PATH)/$@
 
-%.o : ../../src/include/%.cpp Release/.placeholder
+%.o : ../../src/include/%.cpp
 	$(CC) $(CFLAGS) $(DEFS) -c $(<) -o $(OBJECT_PATH)/$@
 
 all : $(PROGRAMS)
 
-Release/.placeholder :
-	if ! [ -d Release ]; then mkdir Release; fi
-	touch Release/.placeholder
-
 effects: effects.cpp $(OBJECTS)
-	$(CC) $(CFLAGS) $(DEFS) -o effects effects.cpp $(OBJECT_PATH)/*.o $(LIBRARY)
+	$(CC) $(LDFLAGS) $(CFLAGS) $(DEFS) -o effects effects.cpp $(OBJECT_PATH)/*.o $(LIBRARY)
 
 libeffects: effects.cpp
-	$(CC) $(CFLAGS) $(DEFS) -o effects effects.cpp -L../../src -lstk $(LIBRARY)
+	$(CC) $(LDFLAGS) $(CFLAGS) $(DEFS) -o effects effects.cpp -L../../src -lstk $(LIBRARY)
 
 $(OBJECTS) : Stk.h
 
 clean : 
-	-rm $(OBJECT_PATH)/*.o
-	-rm $(PROGRAMS) *.exe
-	-rm -fR *.dSYM
+	$(RM) -f $(OBJECT_PATH)/*.o
+	$(RM) -f $(PROGRAMS) *.exe
+	$(RM) -fR *~ *.dSYM
+
+distclean: clean
+	$(RM) Makefile
 
 strip : 
 	strip $(PROGRAMS)

@@ -6,11 +6,12 @@
     provided for setting the zero position along the real axis of the
     z-plane while maintaining a constant filter gain.
 
-    by Perry R. Cook and Gary P. Scavone, 1995 - 2009.
+    by Perry R. Cook and Gary P. Scavone, 1995-2012.
 */
 /***************************************************/
 
 #include "OneZero.h"
+#include <cmath>
 
 namespace stk {
 

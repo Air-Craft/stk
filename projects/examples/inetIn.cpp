@@ -28,9 +28,9 @@
 */
 /******************************************/
 
-#include <cstdlib>
 #include "InetWvIn.h"
 #include "RtWvOut.h"
+#include <cstdlib>
 
 using namespace stk;
 

@@ -21,7 +21,7 @@ namespace stk {
     Chris Rolfe and Damian Keller, though there are likely to be a
     number of differences in the actual implementation.
 
-    by Gary Scavone, 2005 - 2009.
+    by Gary Scavone, 2005 - 2010.
 */
 /***************************************************/
 
@@ -139,7 +139,8 @@ class Granulate: public Generator
     unsigned long decayCount;
     unsigned long delayCount;
     unsigned long counter;
-    unsigned long pointer;
+    //unsigned long pointer;
+    StkFloat pointer;
     unsigned long startPointer;
     unsigned int repeats;
     GrainState state;
@@ -155,7 +156,8 @@ class Granulate: public Generator
   StkFrames data_;
   std::vector<Grain> grains_;
   Noise noise;
-  long gPointer_;
+  //long gPointer_;
+  StkFloat gPointer_;
 
   // Global grain parameters.
   unsigned int gDuration_;
@@ -173,7 +175,7 @@ inline StkFloat Granulate :: lastOut( unsigned int channel )
 {
 #if defined(_STK_DEBUG_)
   if ( channel >= lastFrame_.channels() ) {
-    errorString_ << "Granulate::lastOut(): channel argument is invalid!";
+    oStream_ << "Granulate::lastOut(): channel argument is invalid!";
     handleError( StkError::FUNCTION_ARGUMENT );
   }
 #endif
@@ -186,7 +188,7 @@ inline StkFrames& Granulate :: tick( StkFrames& frames, unsigned int channel )
   unsigned int nChannels = lastFrame_.channels();
 #if defined(_STK_DEBUG_)
   if ( channel > frames.channels() - nChannels ) {
-    errorString_ << "Granulate::tick(): channel and StkFrames arguments are incompatible!";
+    oStream_ << "Granulate::tick(): channel and StkFrames arguments are incompatible!";
     handleError( StkError::FUNCTION_ARGUMENT );
   }
 #endif

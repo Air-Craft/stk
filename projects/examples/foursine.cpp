@@ -1,8 +1,9 @@
 // foursine.cpp STK tutorial program
 
-#include <cstdlib>
 #include "SineWave.h"
 #include "FileWvOut.h"
+#include <cstdlib>
+
 using namespace stk;
 
 int main()

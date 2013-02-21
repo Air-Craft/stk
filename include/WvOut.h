@@ -15,7 +15,7 @@ namespace stk {
     Currently, WvOut is non-interpolating and the output rate is
     always Stk::sampleRate().
 
-    by Perry R. Cook and Gary P. Scavone, 1995 - 2009.
+    by Perry R. Cook and Gary P. Scavone, 1995-2012.
 */
 /***************************************************/
 
@@ -44,6 +44,9 @@ class WvOut : public Stk
   */
   virtual void tick( const StkFloat sample ) = 0;
 
+  //! Output the StkFrames data.
+  virtual void tick( const StkFrames& frames ) = 0;
+
  protected:
 
   // Check for sample clipping and clamp.
@@ -70,7 +73,7 @@ inline StkFloat& WvOut :: clipTest( StkFloat& sample )
   if ( clip == true && clipping_ == false ) {
     // First occurrence of clipping since instantiation or reset.
     clipping_ = true;
-    errorString_ << "WvOut: data value(s) outside +-1.0 detected ... clamping at outer bound!";
+    oStream_ << "WvOut: data value(s) outside +-1.0 detected ... clamping at outer bound!";
     handleError( StkError::WARNING );
   }
 

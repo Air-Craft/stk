@@ -1,8 +1,45 @@
 The Synthesis ToolKit in C++ (STK)
 
-By Perry R. Cook and Gary P. Scavone, 1995-2009.
+By Perry R. Cook and Gary P. Scavone, 1995-2012.
 
-v4.4: (30 April 2009)
+v4.4.4: (24 August 2012)
+- new FreeVerb class (thanks to Greg Burlet)
+- new Guitar class
+- new electric guitar project
+- cleaned / revised Shakers class
+- updated versions of RtAudio and RtMidi
+- bug fix in LentPitShift
+- bug fix in Echo constructor
+- bug fix in FileWvIn (file size when chunking)
+- bug fix in StkFrames copy constructor
+
+v4.4.3: (30 August 2011)
+- changed SINT24 to be lower 3 bytes of 32-bit word
+- bug fixes to vectorized tick functions in Effects classes
+- updated versions of RtAudio and RtMidi
+- fix to ADSR bugs
+- updates to the internal argument checking and reporting scheme
+- updates to Bowed class (thanks to Esteban Maestre!)
+- fixes for 24-bit support in FileRead and FileWrite
+- added WAVE_FORMAT_EXTENSIBLE support in FileWrite
+- added sample rate variable reading and writing for MAT-files in FileRead and FileWrite
+
+v4.4.2: (4 February 2011)
+- added various header file includes for newer compilers
+- new LentPitShift class (thanks to Francois Germain)
+- added "addTo" function to Delay class
+- updates to RtAudio and RtMidi
+- bug fixes in Voicer class (thanks Richard Dobson!)
+- bug fixes in Granulate class
+- added Makefile.in to compile library and all projects, as well as clean and distclean all
+
+v4.4.1: (3 June 2010)
+- added multi-channel/frame tick() virtual function to WvIn and WvOut abstract base classes (required update to RtWvOut class)
+- updated configure script to select g++ compiler by default
+- in demo.cpp: removed voicer grouping for messages, fixing polyphony when messages are on the same MIDI/SKINI channel
+- updates to RtAudio and RtMidi
+
+v4.4: (30 April 2010)
 - all classes embedded in the "stk" namespace (except RtAudio, RtMidi, and RtError)
 - class WaveLoop renamed FileLoop
 - significant efficiency improvements via code restructuring and inlining

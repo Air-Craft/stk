@@ -27,7 +27,7 @@ namespace stk {
     Alternately, control changes can be sent to all voices in a given
     group.
 
-    by Perry R. Cook and Gary P. Scavone, 1995 - 2009.
+    by Perry R. Cook and Gary P. Scavone, 1995-2012.
 */
 /***************************************************/
 
@@ -166,7 +166,7 @@ inline StkFloat Voicer :: lastOut( unsigned int channel )
 {
 #if defined(_STK_DEBUG_)
   if ( channel >= lastFrame_.channels() ) {
-    errorString_ << "Voicer::lastOut(): channel argument is invalid!";
+    oStream_ << "Voicer::lastOut(): channel argument is invalid!";
     handleError( StkError::FUNCTION_ARGUMENT );
   }
 #endif
@@ -184,11 +184,10 @@ inline StkFloat Voicer :: tick( unsigned int channel )
       voices_[i].instrument->tick();
       for ( j=0; j<voices_[i].instrument->channelsOut(); j++ ) lastFrame_[j] += voices_[i].instrument->lastOut( j );
     }
-    if ( voices_[i].sounding < 0 ) {
+    if ( voices_[i].sounding < 0 )
       voices_[i].sounding++;
-      if ( voices_[i].sounding == 0 )
-        voices_[i].noteNumber = -1;
-    }
+    if ( voices_[i].sounding == 0 )
+      voices_[i].noteNumber = -1;
   }
 
   return lastFrame_[channel];
@@ -199,7 +198,7 @@ inline StkFrames& Voicer :: tick( StkFrames& frames, unsigned int channel )
   unsigned int nChannels = lastFrame_.channels();
 #if defined(_STK_DEBUG_)
   if ( channel > frames.channels() - nChannels ) {
-    errorString_ << "Voicer::tick(): channel and StkFrames arguments are incompatible!";
+    oStream_ << "Voicer::tick(): channel and StkFrames arguments are incompatible!";
     handleError( StkError::FUNCTION_ARGUMENT );
   }
 #endif

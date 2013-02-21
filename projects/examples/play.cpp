@@ -16,9 +16,9 @@
 #include "FileWvIn.h"
 #include "RtAudio.h"
 
-#include <cstdlib>
 #include <signal.h>
 #include <iostream>
+#include <cstdlib>
 
 using namespace stk;
 

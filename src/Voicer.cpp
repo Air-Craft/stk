@@ -19,7 +19,7 @@
     Alternately, control changes can be sent to all voices in a given
     group.
 
-    by Perry R. Cook and Gary P. Scavone, 1995 - 2009.
+    by Perry R. Cook and Gary P. Scavone, 1995-2012.
 */
 /***************************************************/
 
@@ -30,6 +30,11 @@ namespace stk {
 
 Voicer :: Voicer( StkFloat decayTime )
 {
+  if ( decayTime < 0.0 ) {
+    oStream_ << "Voicer::Voicer: argument (" << decayTime << ") must be positive!";
+    handleError( StkError::FUNCTION_ARGUMENT );
+  }
+
   tags_ = 23456;
   muteTime_ = (int) ( decayTime * Stk::sampleRate() );
   lastFrame_.resize( 1, 1, 0.0 );
@@ -73,7 +78,7 @@ void Voicer :: removeInstrument( Instrmnt *instrument )
       lastFrame_.resize( 1, maxChannels );
   }
   else {
-    errorString_ << "Voicer::removeInstrument: instrument pointer not found in current voices!";
+    oStream_ << "Voicer::removeInstrument: instrument pointer not found in current voices!";
     handleError( StkError::WARNING );
   }
 }
@@ -165,10 +170,10 @@ void Voicer :: setFrequency( long tag, StkFloat noteNumber )
 void Voicer :: pitchBend( StkFloat value, int group )
 {
   StkFloat pitchScaler;
-  if ( value < 64.0 )
-    pitchScaler = pow(0.5, (64.0-value)/64.0);
+  if ( value < 8192.0 )
+    pitchScaler = pow( 0.5, (8192.0-value) / 8192.0 );
   else
-    pitchScaler = pow(2.0, (value-64.0)/64.0);
+    pitchScaler = pow( 2.0, (value-8192.0) / 8192.0 );
   for ( unsigned int i=0; i<voices_.size(); i++ ) {
     if ( voices_[i].group == group )
       voices_[i].instrument->setFrequency( (StkFloat) (voices_[i].frequency * pitchScaler) );
@@ -178,10 +183,10 @@ void Voicer :: pitchBend( StkFloat value, int group )
 void Voicer :: pitchBend( long tag, StkFloat value )
 {
   StkFloat pitchScaler;
-  if ( value < 64.0 )
-    pitchScaler = pow(0.5, (64.0-value)/64.0);
+  if ( value < 8192.0 )
+    pitchScaler = pow( 0.5, (8192.0-value) / 8192.0 );
   else
-    pitchScaler = pow(2.0, (value-64.0)/64.0);
+    pitchScaler = pow( 2.0, (value-8192.0) / 8192.0 );
   for ( unsigned int i=0; i<voices_.size(); i++ ) {
     if ( voices_[i].tag == tag ) {
       voices_[i].instrument->setFrequency( (StkFloat) (voices_[i].frequency * pitchScaler) );
